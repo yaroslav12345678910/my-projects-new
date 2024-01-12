@@ -25,6 +25,7 @@ class ClickMe:
         font = pygame.font.Font(None, 24)
         text = font.render(f"Попаданий: {self.score}", 1, (200, 200, 200))
         sc.blit(text, (20, 20))
+
     def move(self):
         self.x = random.randint(0, WINDOW_WIDTH - self.width)
         self.y = random.randint(0, WINDOW_HEIGHT - self.height)
@@ -39,6 +40,7 @@ class ClickMe:
     def switch_pause(self):
         self.is_paused = not self.is_paused
         pygame.time.set_timer(TIMER_EVENT_TYPE, self.delay if not self.is_paused else 0)
+
 
 def main():
     pygame.init()
