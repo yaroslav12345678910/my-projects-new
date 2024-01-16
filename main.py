@@ -22,10 +22,3 @@ while running:
                               (255, 0, 0))
             sc.blit(text1, (85, 60))
             pygame.display.update()
-
-
-
-
-            
-
-

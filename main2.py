@@ -1,36 +1,47 @@
 import pygame
 
-# Initialize pygame and create a window
 pygame.init()
-window = pygame.display.set_mode((200, 200))
-pygame.display.set_caption("Window")
+size = width, height = 1200, 675
+sc = pygame.display.set_mode(size)
+FPS = 60
+clock = pygame.time.Clock()
+player_icon = pygame.image.load("player.png")
+player_x = 650
+player_y = 500
+BLACK = (0, 0, 0)
+speed = 13
+background_image = pygame.image.load("volcanoes.jpg")
 
-# Create a font and a text surface to display the number of times the window was minimized
-font = pygame.font.Font(None, 100)
-text_surface = font.render("0", True, (255, 0, 0))
-
-# Create a variable to keep track of the number of times the window was minimized
-minimized_count = 0
-
-# Main loop
+isJump = False
+jumpCount = 10
+flag_space = True
 running = True
+
 while running:
+
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.ACTIVEEVENT:
-            if event.state == pygame.APPACTIVE and event.gain == 0:
-                minimized_count += 1
-                text_surface = font.render(str(minimized_count), True, (255, 0, 0))
 
-    # Clear the screen
-    window.fill((0, 0, 0))
+    sc.blit(background_image, (0, 0))
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_a]:
+        player_x -= speed
+    if keys[pygame.K_d]:
+        player_x += speed
+    if not isJump:
+        if keys[pygame.K_SPACE]:
+            isJump = True
+    else:
+        if jumpCount >= -10:
+            player_y -= (jumpCount * abs(jumpCount)) * 0.7
+            jumpCount -= 1
+        else:
+            jumpCount = 10
+            isJump = False
 
-    # Blit the text surface to the center of the screen
-    window.blit(text_surface, (50, 50))
-
-    # Update the display
+    sc.blit(player_icon, (player_x, player_y))
     pygame.display.update()
-
-# Quit pygame
+    clock.tick(FPS)
 pygame.quit()
